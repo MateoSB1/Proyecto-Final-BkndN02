@@ -1,0 +1,376 @@
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Funnel+Display:wght@300..800&family=Orbitron:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+
+/* Global Styles */
+body {
+    font-family: "Funnel Display", "Roboto", sans-serif;
+    line-height: 1.5;
+    font-size: 1em;
+    color: #333333;
+    margin: 0;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Headings */
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin: 1em 0;
+}
+
+h4 {
+    font-size: 1em;
+    margin: 1.17em 0;
+}
+
+h5 {
+    font-size: 0.83em;
+    margin: 1.5em 0;
+}
+
+h6 {
+    font-size: 0.67em;
+    margin: 2em 0;
+}
+
+/* Navigation Links */
+.header {
+    background-color: #eeeeee;
+    padding: 1em;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333333;
+}
+
+.navbar-welcome {
+    font-weight: bold;
+    color: #333333;
+    margin-right: 1em;
+}
+
+.navbar-form {
+    display: inline-block;
+    margin: 0;
+}
+
+.navbar-btn {
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    background-color: #3498db;
+    color: #eeeeee;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-link {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    background-color: #3498db;
+    color: #eeeeee;
+    text-decoration: none;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+
+    .navbar-left {
+        width: 100%;
+    }
+
+    .navbar-welcome {
+        margin-right: 0;
+    }
+}
+
+/* Horizontal Line */
+hr {
+    border: 1px solid #cccccc;
+    border-bottom: 0px;
+    height: 0px;
+}
+
+/* Text Formatting Tags */
+p {
+    margin: 1em 0;
+}
+
+mark {
+    background-color: #ffeaa7;
+    color: #333333;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+}
+
+/* Quotation and Citation Tags */
+blockquote {
+    border-left: 4px solid #cccccc;
+    margin: 1em 0;
+    padding: 0.6em 1em;
+}
+
+pre {
+    font-family: monospace;
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    padding: 0.8em;
+    border-radius: 3px;
+    font-size: 1em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+code,
+kbd,
+samp {
+    font-family: monospace;
+    font-size: 1em;
+}
+
+code,
+kbd {
+    border-radius: 3px;
+    padding: 0px 2px;
+}
+
+code {
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    color: #c0392b;
+}
+
+kbd {
+    border: 1px solid #333333;
+    background-color: #333333;
+    color: #eeeeee;
+}
+
+/* List Items */
+ul,
+ol {
+    padding-left: 2em;
+}
+
+/* Form Elements */
+fieldset {
+    border: 1px solid #333333;
+    border-radius: 3px;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M00h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 50%;
+}
+
+button,
+input,
+select,
+textarea,
+a[role="button"] {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0.33em;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    border: none;
+    border: 0;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+a[role="button"] {
+    padding: 0.33em 0.66em;
+    cursor: pointer;
+    background-color: #eeeeee;
+    color: #333333;
+    text-decoration: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+a[role="button"]:hover {
+    background-color: #cccccc;
+}
+
+a[role="button"] {
+    padding: 0.5em 0.66em;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+a[role="button"]:disabled {
+    background-color: #eeeeee;
+    color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Progress Bar */
+progress[value] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    vertical-align: middle;
+    border: none;
+    width: 15em;
+    height: 0.75em;
+    background-color: #cccccc;
+    color: #3498db;
+}
+
+progress[value]::-webkit-progress-bar {
+    background-color: #cccccc;
+}
+
+progress[value]::-webkit-progress-value {
+    background-color: #3498db;
+}
+
+/* Table Elements */
+table {
+    border-collapse: collapse;
+}
+
+table,
+table th,
+table td {
+    border-bottom: 1px solid #cccccc;
+    padding: 0.33em 0.66em;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table[border="1"],
+table[border="1"] th,
+table[border="1"] td {
+    border: 1px solid #cccccc;
+}
+
+/* Utility Classes */
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.hide {
+    display: none;
+}
+
+.spacer {
+    display: block;
+    height: 1em;
+    border: none;
+    clear: both;
+}
+
+.wrap {
+    width: 100%;
+    max-width: 40em;
+    margin: auto;
+}
+
+.reset {
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-decoration: none;
+}
+
+ol.reset,
+ul.reset {
+    list-style: none;
+}
+
+.btn {
+    margin: 10px 0;
+    display: block;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #cccccc;
+    text-decoration: none;
+    color: #333333 !important;
+}
+
+.btn-google {
+    background-color: #3471db;
+    color: #eeeeee !important;
+}
+
+/* Containers */
+.container-admin,
+.container-home,
+.container-login,
+.container-profile,
+.container-recuperate,
+.container-register {
+    margin: 1rem;
+}

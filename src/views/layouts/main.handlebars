@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{#if title}}{{title}}{{else}}Inicio{{/if}}</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="/" class="navbar-brand">Home</a>
+            </div>
+            <div class="navbar-right">
+                {{#if username}}
+                <span class="navbar-welcome">Bienvenido, {{username}}</span>
+                <form action="/api/sessions/logout" method="POST" class="navbar-form">
+                    <button type="submit" class="navbar-btn">Cerrar sesión</button>
+                </form>
+                {{else}}
+                <a href="/login" class="navbar-link">Iniciar sesión</a>
+                <a href="/register" class="navbar-link">Registrarse</a>
+                {{/if}}
+            </div>
+        </nav>
+    </header>
+    <main>
+        {{{body}}}
+    </main>
+</body>
+
+</html>
