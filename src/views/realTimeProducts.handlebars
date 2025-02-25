@@ -1,0 +1,77 @@
+<div class="container-rtproducts">
+    <h1 class="title-rtproducts">Productos en tiempo real</h1>
+    {{#if products.length}}
+    <div id="productsContainer" class="products-cont">
+        <!-- Cards Productos -->
+    </div>
+
+    <!-- Contenedor de paginación -->
+    <div class="pagination-container">
+        {{#if hasPrevPage}}
+        <a href="?page={{prevPage}}" class="pagination-button">Anterior</a>
+        {{else}}
+        <span class="pagination-button disabled">Anterior</span>
+        {{/if}}
+
+        <span class="pagination-info">Página {{page}} de {{totalPages}}</span>
+
+        {{#if hasNextPage}}
+        <a href="?page={{nextPage}}" class="pagination-button">Siguiente</a>
+        {{else}}
+        <span class="pagination-button disabled">Siguiente</span>
+        {{/if}}
+    </div>
+    {{else}}
+    <p class="p-home">No hay productos ingresados en el sistema.</p>
+    {{/if}}
+
+    <!-- Formulario para agregar productos -->
+    <div class="form-container">
+        <h4 class="form-header">Agregar producto</h4>
+        <form id="add-product-form" class="form">
+            <div class="form-group">
+                <label for="title" class="form-label">Título:</label>
+                <input type="text" id="title" name="title" placeholder="Ingresa título" required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Descripción:</label>
+                <textarea id="description" name="description" placeholder="Ingresa descripción" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price" class="form-label">Precio:</label>
+                <input type="number" id="price" name="price" placeholder="Ingresa precio" required>
+            </div>
+            <div class="form-group">
+                <label for="code" class="form-label">Código:</label>
+                <input type="text" id="code" name="code" placeholder="Ingresa código" required>
+            </div>
+            <div class="form-group">
+                <label for="stock" class="form-label">Stock:</label>
+                <input type="number" id="stock" name="stock" placeholder="Ingresa Stock" required>
+            </div>
+            <div class="form-group">
+                <label for="category" class="form-label">Categoría:</label>
+                <input type="text" id="category" name="category" placeholder="Ingresa categoría" required>
+            </div>
+            <div class="form-group">
+                <label for="thumbnail" class="form-label">Imágenes:</label>
+                <input type="text" id="thumbnail" name="thumbnail" placeholder="URLs sin comillas y separadas por coma">
+            </div>
+            <div class="form-group">
+                <label for="status" class="form-label">Estado:</label>
+                <select id="status" name="status">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+            </div>
+            <div class="form-action">
+                <button type="submit" class="btn-rtproducts">Agregar producto</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+    integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+    crossorigin="anonymous"></script>
+<script src="/js/script.js"></script>

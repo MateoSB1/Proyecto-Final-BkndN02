@@ -1,3 +1,72 @@
-<div class="container-home">
-    <h1>Home Page</h1>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <div class="home-container">
+        <h1>¡Bienvenido, {{username}}!</h1>
+        <h2>Lista de productos</h2>
+
+        {{#if products.length}}
+        <div class="products-grid">
+            {{#each products}}
+            <div class="product-card">
+                {{#if this.thumbnails.length}}
+                <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" class="product-image" />
+                {{else}}
+                <div class="no-image">Sin imagen</div>
+                {{/if}}
+                <h3 class="product-card-h3">{{title}}</h3>
+                <p class="product-card-p">{{description}}</p>
+                <p class="product-card-p"><strong>Precio:</strong> ${{price}}</p>
+                <p class="product-card-p"><strong>Código:</strong> {{code}}</p>
+                <p class="product-card-p"><strong>Stock:</strong> {{stock}}</p>
+                <p class="product-card-p"><strong>Categoría:</strong> {{category}}</p>
+                <p class="product-card-p"><strong>Estado:</strong> {{#if status}}Activo{{else}}Inactivo{{/if}}</p>
+                <form method="post" action="/api/carts/{{../cart}}/products/{{_id}}">
+                    <button type="submit" class="add-to-cart-button">Agregar al carrito</button>
+                </form>
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- Paginación -->
+        {{#if (gt totalPages 1)}}
+        <div class="pagination-section">
+            {{#if hasPrevPage}}
+            <a href="?page={{prevPage}}" class="pagination-button">Anterior</a>
+            {{else}}
+            <span class="pagination-button disabled">Anterior</span>
+            {{/if}}
+            <p class="pagination-info">Página {{page}} de {{totalPages}}</p>
+            {{#if hasNextPage}}
+            <a href="?page={{nextPage}}" class="pagination-button">Siguiente</a>
+            {{else}}
+            <span class="pagination-button disabled">Siguiente</span>
+            {{/if}}
+        </div>
+        {{/if}}
+
+        {{else}}
+        <p>No hay productos ingresados en el sistema.</p>
+        {{/if}}
+
+        {{#if cart}}
+        <div class="finalize-purchase">
+            <a href="/api/carts/{{cart}}/purchase/" class="btn-finalize">Finalizar compra</a>
+        </div>
+        {{else}}
+        <p>No tienes un carrito activo.</p>
+        {{/if}}
+    </div>
+
+    <script></script>
+</body>
+
+</html>

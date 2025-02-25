@@ -1,25 +1,28 @@
 import passport from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth20"
-import User from "../models/usersModel.js"
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt"
+import User from "../dao/models/userModel.js"
+import env from "./envs.js"
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
+const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID
+const GOOGLE_CLIENT_SECRET = env.GOOGLE_CLIENT_SECRET
+const JWT_SECRET = env.JWT_SECRET
+
+const cookieExtractor = (req) => {
+    let token = null
+    if (req && req.cookies) {
+        token = req.cookies["coderCookieToken"]
+    }
+    return token
+}
 
 const initializePassport = () => {
-    const cookieExtractor = req => {
-        let token = null
-        if (req && req.cookies) {
-            token = req.cookies["coderCookieToken"]
-        }
-        return token
-    }
     passport.use(
         "jwt",
         new JWTStrategy(
             {
                 jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-                secretOrKey: process.env.JWT_SECRET,
+                secretOrKey: JWT_SECRET,
             },
             async (jwt_payload, done) => {
                 try {
@@ -45,15 +48,15 @@ const initializePassport = () => {
                     if (userFound) {
                         return done(null, userFound)
                     }
-                    const newUser = {
+
+                    const newUser = await User.create({
                         first_name: profile.name.givenName || "",
                         last_name: profile.name.familyName || "",
                         email: profile.emails[0].value || "",
-                        password: "",
+                        password: "", // No password needed for Google auth
                         role: "user",
-                    }
-                    const user = await User.create(newUser)
-                    return done(null, user)
+                    })
+                    return done(null, newUser)
                 } catch (error) {
                     return done(error)
                 }
@@ -64,9 +67,14 @@ const initializePassport = () => {
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
+
     passport.deserializeUser(async (id, done) => {
-        const user = await User.findById(id)
-        done(null, user)
+        try {
+            const user = await User.findById(id)
+            done(null, user)
+        } catch (error) {
+            done(error)
+        }
     })
 }
 

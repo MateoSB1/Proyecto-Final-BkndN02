@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del carrito</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <div class="container-cartDetail">
+        {{#if carts.length}}
+        <h1 class="titlesCartDetail">Lista de Carritos</h1>
+        <ul class="list-group">
+            {{#each carts}}
+            <li class="list-group-item cart-item">
+                <h3 class="cart-id-title">
+                    Carrito ID:
+                    <a href="/carts/{{this._id}}" class="cart-link">{{this._id}}</a>
+                </h3>
+                <p><strong>Creado:</strong> {{this.createdAt}}</p>
+                <p><strong>Última actualización:</strong> {{this.updatedAt}}</p>
+                {{#if this.products.length}}
+                <h4 class="titlesCartDetail">Productos:</h4>
+                <ul class="product-list">
+                    {{#each this.products}}
+                    <li class="product-item">
+                        <p><strong>Producto:</strong> {{this.product.title}}</p>
+                        <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+                        <p><strong>Precio:</strong> ${{this.product.price}}</p>
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <p class="no-products-message">Este carrito no tiene productos.</p>
+                {{/if}}
+            </li>
+            {{/each}}
+        </ul>
+        {{else if cart}}
+        <h2 class="titlesCartDetail">Detalles del Carrito</h2>
+        <div class="cart-details">
+            <p><strong>ID del Carrito:</strong> {{cart._id}}</p>
+            <p><strong>Creado:</strong> {{cart.createdAt}}</p>
+            <p><strong>Última actualización:</strong> {{cart.updatedAt}}</p>
+            {{#if cart.products.length}}
+            <h4 class="titlesCartDetail">Productos en el carrito:</h4>
+            <ul class="list-group product-list">
+                {{#each cart.products}}
+                <li class="list-group-item product-item">
+                    <p><strong>Producto:</strong> {{this.product.title}}</p>
+                    <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+                    <p><strong>Precio:</strong> ${{this.product.price}}</p>
+                </li>
+                {{/each}}
+            </ul>
+            <div class="cart-actions">
+                <a href="/products" class="btn btn-primary">Ir a agregar productos al carrito</a>
+                <a href="/carts" class="btn btn-secondary">Volver a todos los Carritos</a>
+            </div>
+            {{else}}
+            <p class="no-products-message">No hay productos en este carrito.</p>
+            <div class="cart-actions">
+                <a href="/products" class="btn btn-primary">Ir a agregar productos al carrito</a>
+                <a href="/carts" class="btn btn-secondary">Volver a todos los Carritos</a>
+            </div>
+            {{/if}}
+        </div>
+        {{else}}
+        <div class="error-message">
+            <p>El carrito no fue encontrado o no hay carritos existentes.</p>
+            <a href="/carts" class="btn btn-secondary">Volver a todos los Carritos</a>
+        </div>
+        {{/if}}
+    </div>
+</body>
+
+</html>

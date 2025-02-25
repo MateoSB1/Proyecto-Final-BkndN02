@@ -1,13 +1,15 @@
 import express from "express"
 import { engine } from "express-handlebars"
 
+import productsRouter from "./routes/productsRouter.js"
+import cartsRouter from "./routes/cartsRouter.js"
 import viewsRouter from "./routes/viewsRouter.js"
 import sessionRouter from "./routes/sessionRouter.js"
 import usersRouter from "./routes/usersRouter.js"
 
 import cookieParser from "cookie-parser"
 
-import connectDB from './config/database.js'
+import connectDB from './config/connect.js'
 
 import passport from "passport"
 import initializePassport from './config/passportConfig.js'
@@ -15,24 +17,39 @@ import initializePassport from './config/passportConfig.js'
 import session from "express-session"
 import MongoStore from "connect-mongo"
 
-import dotenv from "dotenv"
-
-dotenv.config()
+import env from './config/envs.js'
 
 const app = express()
-app.set("PORT", 3000)
+const PORT = env.PORT || 3000
 
-const URI = process.env.MONGO_URI
-connectDB(URI)
+const URI = env.MONGO_URI
+connectDB(URI, "MateoSB1BkndN02")
 
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views", "./src/views")
+app.use(cookieParser())
+app.use(passport.initialize())
+initializePassport()
+
+const hbs = engine({
+    helpers: {
+        gt: function (a, b) {
+            return a > b
+        },
+        ifEquals: function (arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this)
+        }
+    },
+    extname: '.handlebars',
+    defaultLayout: 'main',
+    layoutsDir: './src/views/layouts/',
+})
+
+app.engine('handlebars', hbs)
+app.set('view engine', 'handlebars')
+app.set('views', './src/views')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("./src/public"))
-app.use(cookieParser())
 
 app.use(
     session({
@@ -40,20 +57,19 @@ app.use(
             mongoUrl: URI,
             ttl: 100,
         }),
-        secret: process.env.SESSION_SECRET,
+        secret: env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
     })
 )
 
-app.use(passport.initialize())
-app.use(passport.session())
-initializePassport()
-
+app.use("/api/products", productsRouter)
+app.use("/api/carts", cartsRouter)
 app.use("/api/sessions", sessionRouter)
 app.use("/api/users", usersRouter)
+
 app.use("/", viewsRouter)
 
-app.listen(app.get("PORT"), () => {
-    console.log(`Server on port http://localhost:${app.get("PORT")}`)
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })

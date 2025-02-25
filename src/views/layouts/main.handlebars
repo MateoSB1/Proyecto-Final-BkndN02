@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{#if title}}{{title}}{{else}}Inicio{{/if}}</title>
     <link rel="stylesheet" href="/styles/styles.css">
 </head>
+
 <body>
     <header class="header">
         <nav class="navbar">
             <div class="navbar-left">
-                <a href="/" class="navbar-brand">Home</a>
+                <a href="/" class="navbar-brand">BJT TecnoHogar</a>
             </div>
             <div class="navbar-right">
-                {{#if username}}
-                <span class="navbar-welcome">Bienvenido, {{username}}</span>
-                <form action="/api/sessions/logout" method="POST" class="navbar-form">
-                    <button type="submit" class="navbar-btn">Cerrar sesión</button>
-                </form>
-                {{else}}
-                <a href="/login" class="navbar-link">Iniciar sesión</a>
-                <a href="/register" class="navbar-link">Registrarse</a>
-                {{/if}}
+                <ul class="navbar-links-ul">
+                    {{!-- {{#ifEquals role "admin"}}
+                    <li><a class="navbar-link" href="/realtimeproducts">Productos en tiempo real</a></li>
+                    {{/ifEquals}} --}}
+                    {{#if username}}
+                    <form action="/api/sessions/logout" method="POST" class="navbar-form">
+                        <button type="submit" class="navbar-btn">Cerrar sesión</button>
+                    </form>
+                    {{else}}
+                    <li><a class="navbar-links-a" href="/login">Iniciar sesión</a></li>
+                    <li><a class="navbar-links-a" href="/register">Registrarse</a></li>
+                    {{/if}}
+                </ul>
             </div>
         </nav>
     </header>
     <main>
         {{{body}}}
     </main>
+    
+    <script src="/js/script.js"></script>
 </body>
 
 </html>
