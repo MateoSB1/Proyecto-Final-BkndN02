@@ -54,14 +54,17 @@ app.use(express.static("./src/public"))
 app.use(
     session({
         store: MongoStore.create({
-            mongoUrl: URI,
-            ttl: 100,
+            mongoUrl: env.MONGO_URI,
+            ttl: 60 * 60,
         }),
         secret: env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        cookie: {
+            maxAge: 60 * 60 * 1000,
+        },
     })
-)
+);
 
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)

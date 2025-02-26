@@ -9,4 +9,19 @@ router.post('/login',UsersController.login)
 router.post('/logout',UsersController.logout)
 router.get('/current', passport.authenticate('jwt', { session: false }), UsersController.current)
 
+// Ruta para iniciar el flujo de autenticación de Google
+router.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+// Callback de Google OAuth
+router.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+        successRedirect: "/api/sessions/current", // Asegúrate de que esta ruta existe
+        failureRedirect: "/login"
+    })
+);
+
 export default router
