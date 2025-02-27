@@ -1,10 +1,10 @@
 import UserService from '../services/usersService.js'
 import UserDTO from '../dto/userDTO.js'
 import jwt from 'jsonwebtoken'
-import nodemailer from "nodemailer";
+import nodemailer from "nodemailer"
 import env from '../config/envs.js'
-import User from '../dao/models/userModel.js';
-import { createHash } from '../utils/utils.js';
+import User from '../dao/models/userModel.js'
+import { createHash } from '../utils/utils.js'
 
 class UsersController {
     async createUser(req, res) {
@@ -147,25 +147,25 @@ class UsersController {
     }
     
     async recuperate(req, res) {
-        const { email, newPassword } = req.body;
+        const { email, newPassword } = req.body
     
         if (!email || !newPassword) {
-            return res.status(400).send("Correo electrónico y nueva contraseña son requeridos");
+            return res.status(400).send("Correo electrónico y nueva contraseña son requeridos")
         }
     
         try {
-            const user = await User.findOne({ email });
+            const user = await User.findOne({ email })
             if (!user) {
-                return res.status(404).send("Usuario no encontrado");
+                return res.status(404).send("Usuario no encontrado")
             }
     
-            user.password = createHash(newPassword);
-            await user.save();
+            user.password = createHash(newPassword)
+            await user.save()
     
-            res.redirect("/login");
+            res.redirect("/login")
         } catch (error) {
-            console.error("Error al recuperar contraseña:", error);
-            res.status(500).send("Error interno del servidor");
+            console.error("Error al recuperar contraseña:", error)
+            res.status(500).send("Error interno del servidor")
         }
     }
 }

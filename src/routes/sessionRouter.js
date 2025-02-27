@@ -13,16 +13,16 @@ router.get('/current', passport.authenticate('jwt', { session: false }), UsersCo
 router.get(
     "/auth/google",
     passport.authenticate("google", { scope: ["email", "profile"] })
-);
+)
 
 // Callback de Google OAuth
 router.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-        successRedirect: "/api/sessions/current", // Asegúrate de que esta ruta existe
+        successRedirect: "/api/sessions/current",
         failureRedirect: "/login"
     })
-);
+)
 
 router.post('/recuperate',UsersController.recuperate)
 

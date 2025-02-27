@@ -64,7 +64,7 @@ app.use(
             maxAge: 60 * 60 * 1000,
         },
     })
-);
+)
 
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
