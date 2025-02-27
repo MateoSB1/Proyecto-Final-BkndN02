@@ -48,7 +48,7 @@ class UserService {
     async deleteUser(id) {
         return await UserRepository.deleteUser(id)
     }
-    
+
     async registerUser(userData) {
         const existingUserByEmail = await UserRepository.getUserByEmail(userData.email)
         if (existingUserByEmail) {
@@ -82,10 +82,11 @@ class UserService {
         }
         return user
     }
-    
+
     async getCartByUserId(userId) {
         return await UserRepository.getCartByUserId(userId)
     }
+
 }
 
 export default new UserService()

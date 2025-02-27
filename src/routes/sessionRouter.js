@@ -24,4 +24,6 @@ router.get(
     })
 );
 
+router.post('/recuperate',UsersController.recuperate)
+
 export default router

@@ -11,7 +11,7 @@
 <body>
     <div class="register-container">
         <h1>{{title}}</h1>
-        <form class="register-form">
+        <form action="/api/sessions/register" method="POST" class="register-form">
             <div class="form-group">
                 <label for="firstName">Nombre:</label>
                 <input type="text" id="firstName" name="firstName" placeholder="Ingresa tu nombre" required />

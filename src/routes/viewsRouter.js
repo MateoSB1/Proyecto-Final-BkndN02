@@ -101,4 +101,8 @@ router.get("/register", (req, res) => {
     res.render("register")
 })
 
+router.get("/recuperate", (req, res) => {
+    res.render("recuperate", { title: "Recuperar Contraseña" })
+})
+
 export default router

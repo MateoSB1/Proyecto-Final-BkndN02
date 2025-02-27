@@ -1,7 +1,10 @@
 import UserService from '../services/usersService.js'
 import UserDTO from '../dto/userDTO.js'
 import jwt from 'jsonwebtoken'
+import nodemailer from "nodemailer";
 import env from '../config/envs.js'
+import User from '../dao/models/userModel.js';
+import { createHash } from '../utils/utils.js';
 
 class UsersController {
     async createUser(req, res) {
@@ -70,25 +73,25 @@ class UsersController {
     async register(req, res) {
         try {
             const { firstName, lastName, email, age, username, password, role } = req.body
-    
+
             if (!firstName || !lastName) {
                 return res.status(400).send("Los campos first_name y last_name son requeridos")
             }
-    
+
             const userDTO = new UserDTO(firstName, lastName, email, age, username, role)
             const newUser = await UserService.registerUser({ ...userDTO, password })
-    
+
             const token = jwt.sign(
                 { username: newUser.username, email: newUser.email, role: newUser.role },
                 "extremelydifficulttorevealsecret",
                 { expiresIn: "1h" }
             )
-    
+
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true,
             })
-    
+
             res.redirect("/api/sessions/current")
         } catch (error) {
             console.error("Error al registrar usuario:", error)
@@ -129,7 +132,7 @@ class UsersController {
         if (req.user) {
             if (req.user.role === 'admin') {
                 // res.redirect('/realtimeproducts')
-                res.redirect('/realtimeproducts')
+                res.redirect('/')
             } else {
                 res.redirect('/')
             }
@@ -137,12 +140,34 @@ class UsersController {
             res.redirect('/')
         }
     }
-    
+
     async logout(req, res) {
         res.clearCookie("coderCookieToken")
         res.redirect("/login")
     }
-
+    
+    async recuperate(req, res) {
+        const { email, newPassword } = req.body;
+    
+        if (!email || !newPassword) {
+            return res.status(400).send("Correo electrónico y nueva contraseña son requeridos");
+        }
+    
+        try {
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.status(404).send("Usuario no encontrado");
+            }
+    
+            user.password = createHash(newPassword);
+            await user.save();
+    
+            res.redirect("/login");
+        } catch (error) {
+            console.error("Error al recuperar contraseña:", error);
+            res.status(500).send("Error interno del servidor");
+        }
+    }
 }
 
 export default new UsersController()
