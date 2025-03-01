@@ -106,8 +106,6 @@ class CartController {
                 unavailableProducts
             })
 
-            return res.redirect('/')
-
         } catch (error) {
             console.error(error)
             res.status(500).send(error.message)
